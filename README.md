@@ -68,11 +68,11 @@ Task 5 - Deploy the Item Catalog Project
 3. Require key based logins and prevent logins as root.
     + Open config file
     `sudo nano /etc/ssh/sshd_config`
-    Change these lines from:
+    + Change these lines from:
     `PermitRootLogin yes`
     to `PermitRootLogin no`
 
-    AND
+    + AND
     `PasswordAuthentication yes`
     to `PasswordAuthentication no`
 
@@ -84,9 +84,9 @@ Task 5 - Deploy the Item Catalog Project
     `sudo ufw status`
     
     + Allow specific connections.
-    `sudo ufw allow 2200/tcp`
-    `sudo ufw allow 80/tcp`
-    `sudo ufw allow 123/udp`
+    + `sudo ufw allow 2200/tcp`
+    + `sudo ufw allow 80/tcp`
+    + `sudo ufw allow 123/udp`
     
     + Turn on firewall.
     `sudo ufw enable`
@@ -120,10 +120,10 @@ Task 5 - Deploy the Item Catalog Project
     `sudo apt-get install python-pip`
     
     + Install the Virtual Environment 
-    `sudo pip install virtualenv`
-    `sudo virtualenv venv`
-    `sudo chmod -R 777 venv`
-    `source venv/bin/activate`
+    + `sudo pip install virtualenv`
+    + `sudo virtualenv venv`
+    + `sudo chmod -R 777 venv`
+    + `source venv/bin/activate`
     
 4. Install Flask (within the virtual environment - you'll see 'venv' before the user in the command line) 
     `sudo pip install Flask`
@@ -132,21 +132,21 @@ Task 5 - Deploy the Item Catalog Project
     `sudo pip install httplib2 oauth2client sqlalchemy psycopg2 sqlalchemy_utils`
 
 5. Install and configure PostgreSQL.
-    `sudo apt-get install libpq-dev python-dev`
-    `sudo apt-get install postgresql postgresql-contrib`
+    + `sudo apt-get install libpq-dev python-dev`
+    + `sudo apt-get install postgresql postgresql-contrib`
 
     + Add catalog user and login as default postgres user to create db and grant permissions to catalog user
-    `sudo adduser catalog`
-    `sudo su - postgres`
-    `psql`
-    `CREATE USER catalog WITH PASSWORD 'catalog';`
-    `ALTER USER catalog CREATEDB;`
-    `CREATE DATABASE shelflife WITH OWNER catalog;`
-    `\c catalog`
-    `REVOKE ALL ON SCHEMA public FROM public;`
-    `GRANT ALL ON SCHEMA public TO catalog;`
-    `\q`
-    `exit`
+    + `sudo adduser catalog`
+    + `sudo su - postgres`
+    + `psql`
+    + `CREATE USER catalog WITH PASSWORD 'catalog';`
+    + `ALTER USER catalog CREATEDB;`
+    + `CREATE DATABASE shelflife WITH OWNER catalog;`
+    + `\c catalog`
+    + `REVOKE ALL ON SCHEMA public FROM public;`
+    + `GRANT ALL ON SCHEMA public TO catalog;`
+    + `\q`
+    + `exit`
    
 ## Task 5 - Deploy the Item Catalog Project
 1. Install git
@@ -191,21 +191,21 @@ Task 5 - Deploy the Item Catalog Project
 
     + Make the following changes to `shelflife_models.py` and `shelflife_load.py`:
     `sudo nano shelflife_models.py`
-    Change from `engine = create_engine('sqlite:///shelflife.db')` 
+    + Change from `engine = create_engine('sqlite:///shelflife.db')` 
     to `engine = create_engine('postgresql://catalog:catalog@localhost/shelflife')`
     `sudo nano shelflife_load.py`
-    Change from `engine = create_engine('sqlite:///shelflife.db')` 
+    + Change from `engine = create_engine('sqlite:///shelflife.db')` 
     to `engine = create_engine('postgresql://catalog:catalog@localhost/shelflife')`
  
     + Create tables and populate with initial data
-    `python /var/www/catalog/item_catalog/shelflife_models.py`
-    `python /var/www/catalog/item_catalog/shelflife_load.py`
+    + `python /var/www/catalog/item_catalog/shelflife_models.py`
+    + `python /var/www/catalog/item_catalog/shelflife_load.py`
 
     + Make the following changes to `__init__.py`:
     `sudo nano shelflife.py`
-    Change from `engine = create_engine('sqlite:///shelflife.db')` 
+    + Change from `engine = create_engine('sqlite:///shelflife.db')` 
     to `engine = create_engine('postgresql://catalog:catalog@localhost/shelflife')`
-    Also change every reference from `client_secrets.json` to `/var/www/catalog/item_catalog/client_secrets.json`
+    + Also change every reference from `client_secrets.json` to `/var/www/catalog/item_catalog/client_secrets.json`
 
 4. Configure and enable virtual host
     `sudo nano /etc/apache2/sites-available/caalog.conf`
@@ -235,10 +235,10 @@ Task 5 - Deploy the Item Catalog Project
     `sudo a2ensite catalog`
 
 5. Make sure that your .git directory is not publicly accessible via a browser.
-    `cd var/www/catalog/`
-    `sudo nano .htaccess`
-    Add `RedirectMatch 404 /\.git`
-    Save file and exit
+    + `cd var/www/catalog/`
+    + `sudo nano .htaccess`
+    + Add `RedirectMatch 404 /\.git`
+    + Save file and exit
 
 6. Alter OAuth to work with hosted app
     + Ensure your host name (can be found using [http://wwww.hcidata.info/host2ip.cgi](http://wwww.hcidata.info/host2ip.cgi)) is in the ServerAlias entry in the catalog.conf file
