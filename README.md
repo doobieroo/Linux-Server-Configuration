@@ -175,13 +175,15 @@ Task 5 - Deploy the Item Catalog Project
     `sudo nano catalog.wsgi`
 
     + Add the following code:
-    `#!usr/bin/python`
-    `import sys`
-    `import logging`
-    `logging.basicConfig(stream=sys.stderr)`
-    `sys.path.insert(0,"/var/www/catalog")`
-    `from item_catalog import app as application`
-    `application.secret_key = 'super_secret_key`
+    ```
+    #!usr/bin/python
+    import sys
+    import logging
+    logging.basicConfig(stream=sys.stderr)
+    sys.path.insert(0,"/var/www/catalog")
+    from item_catalog import app as application
+    application.secret_key = 'super_secret_key
+    ```
     Save the changes and exit
 
     + Copy your main project file (shelflife.py) into the init.py file
@@ -208,24 +210,25 @@ Task 5 - Deploy the Item Catalog Project
 4. Configure and enable virtual host
     `sudo nano /etc/apache2/sites-available/caalog.conf`
     and add this code:
-    `<VirtualHost *:80>`
-    `   ServerName YOUR_PUBLIC_IP_ADDRESS`
-    `   ServerAdmin admin@YOUR_PUBLIC_IP_ADDRESS`
-    `   ServerAlias YOUR_HOST_NAME`
-    `   WSGIScriptAlias / /var/www/catalog/catalog.wsgi`
-    `   <Directory /var/www/catalog/item_catalog/>`
-    `       Order allow,deny`
-    `       Allow from all`
-    `   </Directory>`
-    `   Alias /static /var/www/catalog/item_catalog/static`
-    `   <Directory /var/www/catalog/item_catalog/static/>`
-    `       Order allow,deny`
-    `       Allow from all`
-    `   </Directory>`
-    `   ErrorLog ${APACHE_LOG_DIR}/error.log`
-    `   LogLevel warn`
-    `   CustomLog ${APACHE_LOG_DIR}/access.log combined`
-    `</VirtualHost>`
+    ``` <VirtualHost *:80>
+       ServerName YOUR_PUBLIC_IP_ADDRESS
+       ServerAdmin admin@YOUR_PUBLIC_IP_ADDRESS
+       ServerAlias YOUR_HOST_NAME
+       WSGIScriptAlias / /var/www/catalog/catalog.wsgi
+       <Directory /var/www/catalog/item_catalog/>
+           Order allow,deny
+           Allow from all
+       </Directory>
+       Alias /static /var/www/catalog/item_catalog/static
+       <Directory /var/www/catalog/item_catalog/static/>
+           Order allow,deny
+           Allow from all
+       </Directory>
+       ErrorLog ${APACHE_LOG_DIR}/error.log
+       LogLevel warn
+       CustomLog ${APACHE_LOG_DIR}/access.log combined
+    </VirtualHost>
+    ```
     Save file and exit
 
     + Enable the virtual host
